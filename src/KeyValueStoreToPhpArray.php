@@ -8,7 +8,7 @@
 
 require_once __DIR__ . '/KeyValueStoreInterface.php';
 
-class KeyValueStore implements KeyValueStoreInterface
+class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 {
 
     private $storage = [];
