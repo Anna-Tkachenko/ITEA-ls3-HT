@@ -10,58 +10,52 @@ require_once __DIR__ . '/KeyValueStoreInterface.php';
 
 class KeyValueStore implements KeyValueStoreInterface
 {
-    /**
-     * Stores value by key.
-     *
-     * @param string  $key   Name of the key.
-     * @param mixed   $value Value to store.
-     */
+
+    private $storage = [];
+
     public function set($key, $value)
     {
-
+        if (is_string($key)) {
+            $this->storage[$key] = $value;
+        } else {
+            throw new \LogicException(
+                \sprintf("Invalid format of argument. Key '%s' is not string", $key)
+            );
+        }
     }
 
-    /**
-     * Gets value by key.
-     *
-     * @param string     $key     Name of the key.
-     * @param null|mixed $default Default value.
-     *
-     * @return mixed Can be of any type: int, string, null, array, e.g.
-     * If value does not exist for provided key, $default will be returned.
-     */
     public function get($key, $default = null)
     {
+        if(isset($this->storage[$key])){
+            return $this->storage[$key];
+        }
+
+        return $default;
 
     }
 
-    /**
-     * Checks whether value is exist by key.
-     *
-     * @param string $key Name of key.
-     *
-     * @return bool Returns true if key exists, false otherwise.
-     */
     public function has($key)
     {
+        if(array_key_exists($key, $this->storage)){
+            return true;
+        }
 
+        return false;
     }
 
-    /**
-     * Removes value by key.
-     *
-     * @param string $key Name of key.
-     */
     public function remove($key)
     {
-
+        if (isset($this->storage[$key])) {
+            unset($this->storage[$key]);
+        } else {
+            throw new \LogicException(
+                \sprintf("Key '%s' does not exists in storage %s", $key, self::class)
+            );
+        }
     }
 
-    /**
-     * Removes all keys and their values from the storage.
-     */
     public function clear()
     {
-
+        $this->storage = [];
     }
 }
