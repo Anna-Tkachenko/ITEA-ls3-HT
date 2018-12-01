@@ -10,6 +10,8 @@
 require_once  __DIR__ . '/../src/console_helper.php';
 require_once __DIR__ . '/../src/KeyValueStoreToPhpArray.php';
 require_once  __DIR__ . '/../src/KeyValueStoreToYamlFile.php';
+require_once  __DIR__ . '/../src/KeyValueStoreToJsonFile.php';
+
 
 $storage1 = new KeyValueStoreToPhpArray();
 
@@ -41,5 +43,15 @@ writeln($storage2->get('name'));
 $storage2->clear();
 
 
+$storage3 = new KeyValueStoreToJsonFile();
 
+$storage3->set('name','Anna');
+$storage3->set('mail','email@example');
+writeln($storage3->get('name'));
 
+writeln($storage3->has('mail'));
+
+$storage3->remove('name');
+writeln($storage3->get('name'));
+
+$storage3->clear();
