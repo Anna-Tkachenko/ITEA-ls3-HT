@@ -29,3 +29,17 @@ writeln($storage1->get('name'));
 $storage2 = new KeyValueStoreToYamlFile();
 
 $storage2->set('name', 'Anna');
+$storage2->set('mail','email@example');
+
+writeln($storage2->get('name'));
+
+writeln($storage2->has('mail'));
+
+$storage2->remove('name');
+writeln($storage2->get('name'));
+
+$storage2->clear();
+
+
+
+

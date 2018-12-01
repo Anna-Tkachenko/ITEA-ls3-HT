@@ -10,64 +10,55 @@ require_once __DIR__ . '/KeyValueStoreInterface.php';
 
 class KeyValueStoreToYamlFile implements KeyValueStoreInterface
 {
-    /**
-     * Stores value by key.
-     *
-     * @param string  $key   Name of the key.
-     * @param mixed   $value Value to store.
-     */
+    private $storage = [];
+
     public function set($key, $value)
     {
-        $array = array(
-            $key => $value
-        );
-
-        $yaml = yaml_emit($array);
-
-        file_put_contents('./storage.yaml', $yaml);
+        if (is_string($key)) {
+            $this->storage[$key] = $value;
+            yaml_emit_file('./storage.yaml', $this->storage);
+        } else {
+            throw new \LogicException(
+                \sprintf("Invalid format of argument. Key '%s' is not string", $key)
+            );
+        }
     }
 
-    /**
-     * Gets value by key.
-     *
-     * @param string     $key     Name of the key.
-     * @param null|mixed $default Default value.
-     *
-     * @return mixed Can be of any type: int, string, null, array, e.g.
-     * If value does not exist for provided key, $default will be returned.
-     */
     public function get($key, $default = null)
     {
+        $temp_array = yaml_parse_file('./storage.yaml');
+        if(isset($temp_array[$key])){
+            return $temp_array[$key];
+        }
 
+        return $default;
     }
 
-    /**
-     * Checks whether value is exist by key.
-     *
-     * @param string $key Name of key.
-     *
-     * @return bool Returns true if key exists, false otherwise.
-     */
     public function has($key)
     {
+        $temp_array = yaml_parse_file('./storage.yaml');
+        if(array_key_exists($key, $temp_array)){
+            return true;
+        }
 
+        return false;
     }
 
-    /**
-     * Removes value by key.
-     *
-     * @param string $key Name of key.
-     */
     public function remove($key)
     {
-
+        if (isset($this->storage[$key])) {
+            unset($this->storage[$key]);
+            yaml_emit_file('./storage.yaml', $this->storage);
+        } else {
+            throw new \LogicException(
+                \sprintf("Key '%s' does not exists in YAML file", $key)
+            );
+        }
     }
 
-    /**
-     * Removes all keys and their values from the storage.
-     */
     public function clear()
     {
-
+        $this->storage = [];
+        yaml_emit_file('./storage.yaml', $this->storage);
     }
 }
