@@ -6,67 +6,45 @@
  * Time: 3:34 PM
  */
 
-require_once __DIR__ . '/KeyValueStoreInterface.php';
+require_once __DIR__ . '/KeyValueStoreToFile.php';
 
-class KeyValueStoreToJsonFile implements KeyValueStoreInterface
+class KeyValueStoreToJsonFile extends KeyValueStoreToFile
 {
-    private $storage = [];
 
-    public function set($key, $value)
+    public function setToJson($key, $value)
     {
-        if (is_string($key)) {
-            $this->storage[$key] = $value;
-            file_put_contents('./storage.json', json_encode($this->storage));
-        } else {
-            throw new \LogicException(
-                \sprintf("Invalid format of argument. Key '%s' is not string", $key)
-            );
-        }
+       if($this->set($key, $value)) {
+           file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
+       }
     }
 
-    public function get($key, $default = null)
+     public function getFromJson($key, $default = null)
     {
-        $json_content = file_get_contents('./storage.json');
-        $temp_array = json_decode($json_content);
+        $json_content = file_get_contents('data/' . $this->__get('file_path'));
+        $temp_array = json_decode($json_content, true);
 
-        foreach ($temp_array as $temp_key => $value) {
-            if ($temp_key == $key){
-                return $value;
-            }
-        }
-
-        return $default;
+        return $this->get($key, $default, $temp_array);
     }
 
     public function has($key)
     {
-        $json_content = file_get_contents('./storage.json');
+        $json_content = file_get_contents('data/' . $this->__get('file_path'));
         $temp_array = json_decode($json_content);
-
-        foreach ($temp_array as $temp_key => $value) {
-            if ($temp_key == $key){
-                return true;
-            }
-        }
-
-        return false;
+        return array_key_exists($key, $temp_array);
     }
 
-    public function remove($key)
+    public function removeFromJson($key)
     {
-        if (isset($this->storage[$key])) {
-            unset($this->storage[$key]);
-            file_put_contents('./storage.json', json_encode($this->storage));
-        } else {
-            throw new \LogicException(
-                \sprintf("Key '%s' does not exists in JSON file", $key)
-            );
+        if($this->remove($key)){
+            file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
         }
     }
 
-    public function clear()
+    public function clearJson()
     {
-        $this->storage = [];
-        file_put_contents('./storage.json', json_encode($this->storage));
+        if($this->clear()){
+            file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
+        }
+
     }
 }

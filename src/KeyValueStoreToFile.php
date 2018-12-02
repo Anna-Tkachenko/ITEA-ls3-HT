@@ -2,21 +2,32 @@
 /**
  * Created by PhpStorm.
  * User: tkachenko
- * Date: 11/30/18
- * Time: 7:03 PM
+ * Date: 12/2/18
+ * Time: 9:18 PM
  */
 
 require_once __DIR__ . '/KeyValueStoreInterface.php';
 
-class KeyValueStoreToPhpArray implements KeyValueStoreInterface
+abstract class KeyValueStoreToFile implements KeyValueStoreInterface
 {
-
     private $storage = [];
+    private $file_path;
+
+    public function __construct($file_path)
+    {
+        $this->file_path = $file_path;
+    }
+
+    public function __get($value)
+    {
+        return $this->$value;
+    }
 
     public function set($key, $value)
     {
         if (is_string($key)) {
             $this->storage[$key] = $value;
+            return true;
         } else {
             throw new \LogicException(
                 \sprintf("Invalid format of argument. Key '%s' is not string", $key)
@@ -26,26 +37,26 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 
     public function get($key, $default = null, $temp_array = null)
     {
-        if(isset($this->storage[$key])){
-            return $this->storage[$key];
+        if(isset($temp_array[$key])){
+            return $temp_array[$key];
         }
 
         return $default;
-
     }
 
     public function has($key)
     {
-        return array_key_exists($key, $this->storage);
+
     }
 
     public function remove($key)
     {
         if (isset($this->storage[$key])) {
             unset($this->storage[$key]);
+            return true;
         } else {
             throw new \LogicException(
-                \sprintf("Key '%s' does not exists in storage %s", $key, self::class)
+                \sprintf("Key '%s' does not exists in this storage", $key)
             );
         }
     }
@@ -53,5 +64,6 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
     public function clear()
     {
         $this->storage = [];
+        return true;
     }
 }
