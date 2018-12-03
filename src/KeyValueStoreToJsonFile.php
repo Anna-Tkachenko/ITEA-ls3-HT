@@ -8,7 +8,7 @@
 
 require_once __DIR__ . '/KeyValueStoreToFile.php';
 
-class KeyValueStoreToJsonFile extends KeyValueStoreToFile
+final class KeyValueStoreToJsonFile extends KeyValueStoreToFile
 {
 
     public function setToJson($key, $value)

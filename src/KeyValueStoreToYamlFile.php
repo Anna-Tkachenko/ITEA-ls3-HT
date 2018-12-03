@@ -7,41 +7,47 @@
  */
 
 require_once __DIR__ . '/KeyValueStoreToFile.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-class KeyValueStoreToYamlFile extends KeyValueStoreToFile
+use Symfony\Component\Yaml\Yaml;
+
+final class KeyValueStoreToYamlFile extends KeyValueStoreToFile
 {
 
     public function setToYaml($key, $value)
     {
         if($this->set($key, $value)) {
-            yaml_emit_file('data/' . $this->__get('file_path'), $this->__get('storage'));
+            $yaml = Yaml::dump($this->__get('storage'));
+            file_put_contents('data/' . $this->__get('file_path'), $yaml);
         }
     }
 
     public function getFromYaml($key, $default = null)
     {
-        $temp_array = yaml_parse_file('data/' . $this->__get('file_path'));
+        $temp_array = Yaml::parseFile('data/' . $this->__get('file_path'));
 
         return $this->get($key, $default, $temp_array);
     }
 
     public function has($key)
     {
-        $temp_array = yaml_parse_file('data/' . $this->__get('file_path'));
+        $temp_array = Yaml::parseFile('data/' . $this->__get('file_path'));
         return array_key_exists($key, $temp_array);
     }
 
     public function removeFromYaml($key)
     {
         if($this->remove($key)){
-            yaml_emit_file('data/' . $this->__get('file_path'), $this->__get('storage'));
+            $yaml = Yaml::dump($this->__get('storage'));
+            file_put_contents('data/' . $this->__get('file_path'), $yaml);
         }
     }
 
     public function clearYaml()
     {
         if($this->clear()){
-            yaml_emit_file('data/' . $this->__get('file_path'), $this->__get('storage'));
+            $yaml = Yaml::dump($this->__get('storage'));
+            file_put_contents('data/' . $this->__get('file_path'), $yaml);
         }
 
     }

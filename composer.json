@@ -1,0 +1,6 @@
+{
+    "name": "tkachenko/ls3_ht",
+    "require": {
+        "symfony/yaml": "^4.2"
+    }
+}

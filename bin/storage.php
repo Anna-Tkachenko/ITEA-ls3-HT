@@ -41,6 +41,7 @@ writeln($storage2->has('mail'));
 $storage2->removeFromYaml('name');
 writeln($storage2->getFromYaml('name'));
 
+
 //$storage2->clear();
 /*
 
