@@ -25,7 +25,7 @@ interface KeyValueStoreInterface
      * @return mixed Can be of any type: int, string, null, array, e.g.
      * If value does not exist for provided key, $default will be returned.
      */
-    public function get($key, $default = null, $temp_array = null);
+    public function get($key, $default = null);
 
     /**
      * Checks whether value is exist by key.

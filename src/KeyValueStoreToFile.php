@@ -6,24 +6,19 @@
  * Time: 9:18 PM
  */
 
-require_once __DIR__ . '/KeyValueStoreInterface.php';
 
-abstract class KeyValueStoreToFile implements KeyValueStoreInterface
+
+abstract class KeyValueStoreToFile
 {
-    private $storage = [];
-    private $file_path;
+    protected $storage = [];
+    protected $file_path;
 
     public function __construct($file_path)
     {
         $this->file_path = $file_path;
     }
 
-    public function __get($value)
-    {
-        return $this->$value;
-    }
-
-    public function set($key, $value)
+    protected function setToStorageArray($key, $value)
     {
         if (is_string($key)) {
             $this->storage[$key] = $value;
@@ -35,7 +30,7 @@ abstract class KeyValueStoreToFile implements KeyValueStoreInterface
         }
     }
 
-    public function get($key, $default = null, $temp_array = null)
+    protected function getFromStorageArray($key, $default = null, $temp_array = null)
     {
         if(isset($temp_array[$key])){
             return $temp_array[$key];
@@ -44,12 +39,7 @@ abstract class KeyValueStoreToFile implements KeyValueStoreInterface
         return $default;
     }
 
-    public function has($key)
-    {
-
-    }
-
-    public function remove($key)
+    protected function removeFromStorageArray($key)
     {
         if (isset($this->storage[$key])) {
             unset($this->storage[$key]);
@@ -61,7 +51,7 @@ abstract class KeyValueStoreToFile implements KeyValueStoreInterface
         }
     }
 
-    public function clear()
+    protected function clearStorageArray()
     {
         $this->storage = [];
         return true;

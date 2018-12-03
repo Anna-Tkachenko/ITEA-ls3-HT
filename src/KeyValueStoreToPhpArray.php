@@ -24,7 +24,7 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         }
     }
 
-    public function get($key, $default = null, $temp_array = null)
+    public function get($key, $default = null)
     {
         if(isset($this->storage[$key])){
             return $this->storage[$key];

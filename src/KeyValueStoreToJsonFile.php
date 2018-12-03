@@ -7,43 +7,44 @@
  */
 
 require_once __DIR__ . '/KeyValueStoreToFile.php';
+require_once __DIR__ . '/KeyValueStoreInterface.php';
 
-final class KeyValueStoreToJsonFile extends KeyValueStoreToFile
+final class KeyValueStoreToJsonFile extends KeyValueStoreToFile implements KeyValueStoreInterface
 {
 
-    public function setToJson($key, $value)
+    public function set($key, $value)
     {
-       if($this->set($key, $value)) {
-           file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
+       if($this->setToStorageArray($key, $value)) {
+           file_put_contents('data/' . $this->file_path, json_encode($this->storage));
        }
     }
 
-     public function getFromJson($key, $default = null)
+     public function get($key, $default = null)
     {
-        $json_content = file_get_contents('data/' . $this->__get('file_path'));
+        $json_content = file_get_contents('data/' . $this->file_path);
         $temp_array = json_decode($json_content, true);
 
-        return $this->get($key, $default, $temp_array);
+        return $this->getFromStorageArray($key, $default, $temp_array);
     }
 
     public function has($key)
     {
-        $json_content = file_get_contents('data/' . $this->__get('file_path'));
+        $json_content = file_get_contents('data/' . $this->file_path);
         $temp_array = json_decode($json_content);
         return array_key_exists($key, $temp_array);
     }
 
-    public function removeFromJson($key)
+    public function remove($key)
     {
-        if($this->remove($key)){
-            file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
+        if($this->removeFromStorageArray($key)){
+            file_put_contents('data/' . $this->file_path, json_encode($this->storage));
         }
     }
 
-    public function clearJson()
+    public function clear()
     {
-        if($this->clear()){
-            file_put_contents('data/' . $this->__get('file_path'), json_encode($this->__get('storage')));
+        if($this->clearStorageArray()){
+            file_put_contents('data/' . $this->file_path, json_encode($this->storage));
         }
 
     }

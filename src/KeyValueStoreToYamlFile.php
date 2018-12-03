@@ -7,47 +7,48 @@
  */
 
 require_once __DIR__ . '/KeyValueStoreToFile.php';
+require_once __DIR__ . '/KeyValueStoreInterface.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 
-final class KeyValueStoreToYamlFile extends KeyValueStoreToFile
+final class KeyValueStoreToYamlFile extends KeyValueStoreToFile implements KeyValueStoreInterface
 {
 
-    public function setToYaml($key, $value)
+    public function set($key, $value)
     {
-        if($this->set($key, $value)) {
-            $yaml = Yaml::dump($this->__get('storage'));
-            file_put_contents('data/' . $this->__get('file_path'), $yaml);
+        if($this->setToStorageArray($key, $value)) {
+            $yaml = Yaml::dump($this->storage);
+            file_put_contents('data/' . $this->file_path, $yaml);
         }
     }
 
-    public function getFromYaml($key, $default = null)
+    public function get($key, $default = null)
     {
-        $temp_array = Yaml::parseFile('data/' . $this->__get('file_path'));
+        $temp_array = Yaml::parseFile('data/' . $this->file_path);
 
-        return $this->get($key, $default, $temp_array);
+        return $this->getFromStorageArray($key, $default, $temp_array);
     }
 
     public function has($key)
     {
-        $temp_array = Yaml::parseFile('data/' . $this->__get('file_path'));
+        $temp_array = Yaml::parseFile('data/' . $this->file_path);
         return array_key_exists($key, $temp_array);
     }
 
-    public function removeFromYaml($key)
+    public function remove($key)
     {
-        if($this->remove($key)){
-            $yaml = Yaml::dump($this->__get('storage'));
-            file_put_contents('data/' . $this->__get('file_path'), $yaml);
+        if($this->removeFromStorageArray($key)){
+            $yaml = Yaml::dump($this->storage);
+            file_put_contents('data/' . $this->file_path, $yaml);
         }
     }
 
-    public function clearYaml()
+    public function clear()
     {
-        if($this->clear()){
-            $yaml = Yaml::dump($this->__get('storage'));
-            file_put_contents('data/' . $this->__get('file_path'), $yaml);
+        if($this->clearStorageArray()){
+            $yaml = Yaml::dump($this->storage);
+            file_put_contents('data/' . $this->file_path, $yaml);
         }
 
     }

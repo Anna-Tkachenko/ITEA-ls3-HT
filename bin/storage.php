@@ -28,34 +28,35 @@ $storage1->clear();
 
 writeln($storage1->get('name'));
 */
-
+/*
 $storage2 = new KeyValueStoreToYamlFile('storage.yaml');
 
-$storage2->setToYaml('name', 'Anna');
-$storage2->setToYaml('mail','email@example');
+$storage2->set('name', 'Anna');
+$storage2->set('mail','email@example');
 
-writeln($storage2->getFromYaml('name', ''));
+writeln($storage2->get('name', ''));
 
 writeln($storage2->has('mail'));
 
-$storage2->removeFromYaml('name');
-writeln($storage2->getFromYaml('name'));
+$storage2->remove('name');
+writeln($storage2->get('name'));
 
 
 //$storage2->clear();
-/*
+*/
+
 
 $storage3 = new KeyValueStoreToJsonFile('storage.json');
 
-$storage3->setToJson('name','Anna');
-$storage3->setToJson('mail','email@example');
-writeln($storage3->getFromJson('name'));
+$storage3->set('name','Anna');
+$storage3->set('mail','email@example');
+writeln($storage3->get('name'));
 
 
 writeln($storage3->has('mail'));
 writeln($storage3->has('mail'));
 writeln($storage3->has('mail'));
 
-$storage3->removeFromJson('name'); */
+$storage3->remove('name');
 
 //$storage3->clear();
