@@ -1,6 +1,13 @@
 {
     "name": "tkachenko/ls3_ht",
     "require": {
+        "php": ">=7.1.0",
+        "ext-json": "*",
         "symfony/yaml": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
     }
 }

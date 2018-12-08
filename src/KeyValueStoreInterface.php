@@ -6,6 +6,8 @@
  * Time: 6:41 PM
  */
 
+namespace App;
+
 interface KeyValueStoreInterface
 {
     /**

@@ -6,7 +6,7 @@
  * Time: 7:03 PM
  */
 
-require_once __DIR__ . '/KeyValueStoreInterface.php';
+namespace App;
 
 class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 {

@@ -6,46 +6,22 @@
  * Time: 3:34 PM
  */
 
-require_once __DIR__ . '/KeyValueStoreToFile.php';
-require_once __DIR__ . '/KeyValueStoreInterface.php';
+namespace App;
 
-final class KeyValueStoreToJsonFile extends KeyValueStoreToFile implements KeyValueStoreInterface
+final class KeyValueStoreToJsonFile extends AbstractKeyValueStoreToFile
 {
 
-    public function set($key, $value)
+    protected function load():array
     {
-       if($this->setToStorageArray($key, $value)) {
-           file_put_contents('data/' . $this->file_path, json_encode($this->storage));
-       }
+        $storage = file_get_contents($this->file_path);
+        $data = json_decode($storage, true);
+        return is_array($data) ? $data : [];
     }
 
-     public function get($key, $default = null)
+    protected function update(array $data)
     {
-        $json_content = file_get_contents('data/' . $this->file_path);
-        $temp_array = json_decode($json_content, true);
-
-        return $this->getFromStorageArray($key, $default, $temp_array);
+        $json = json_encode($data);
+        file_put_contents($this->file_path, $json);
     }
 
-    public function has($key)
-    {
-        $json_content = file_get_contents('data/' . $this->file_path);
-        $temp_array = json_decode($json_content);
-        return array_key_exists($key, $temp_array);
-    }
-
-    public function remove($key)
-    {
-        if($this->removeFromStorageArray($key)){
-            file_put_contents('data/' . $this->file_path, json_encode($this->storage));
-        }
-    }
-
-    public function clear()
-    {
-        if($this->clearStorageArray()){
-            file_put_contents('data/' . $this->file_path, json_encode($this->storage));
-        }
-
-    }
 }

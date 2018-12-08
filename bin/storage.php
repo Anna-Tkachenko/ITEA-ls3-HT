@@ -7,55 +7,57 @@
  * Time: 7:03 PM
  */
 
-require_once  __DIR__ . '/../src/console_helper.php';
-require_once __DIR__ . '/../src/KeyValueStoreToPhpArray.php';
-require_once __DIR__ . '/../src/KeyValueStoreToYamlFile.php';
-require_once __DIR__ . '/../src/KeyValueStoreToJsonFile.php';
+use App\AbstractKeyValueStoreToFile;
+use App\KeyValueStoreToJsonFile;
+use App\KeyValueStoreToYamlFile;
+use App\KeyValueStoreToPhpArray;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 
 /*$storage1 = new KeyValueStoreToPhpArray();
 
 $storage1->set('name', 'Anna');
 $storage1->set('email','mail@example');
-writeln($storage1->get('name'));
+var_dump($storage1->get('name'));
 
-writeln($storage1->has('email'));
+var_dump($storage1->has('email'));
 
 $storage1->remove('email');
-writeln($storage1->get('email'));
+var_dump($storage1->get('email'));
 
 $storage1->clear();
 
-writeln($storage1->get('name'));
+var_dump($storage1->get('name'));
 */
 /*
-$storage2 = new KeyValueStoreToYamlFile('storage.yaml');
+$storage2 = new KeyValueStoreToYamlFile('data/storage.yaml');
 
 $storage2->set('name', 'Anna');
 $storage2->set('mail','email@example');
 
-writeln($storage2->get('name', ''));
+var_dump($storage2->get('name', ''));
 
-writeln($storage2->has('mail'));
+var_dump($storage2->has('mail'));
 
 $storage2->remove('name');
-writeln($storage2->get('name'));
+var_dump($storage2->get('name'));
 
 
 //$storage2->clear();
 */
 
 
-$storage3 = new KeyValueStoreToJsonFile('storage.json');
+$storage3 = new KeyValueStoreToJsonFile('data/storage.json');
 
 $storage3->set('name','Anna');
 $storage3->set('mail','email@example');
-writeln($storage3->get('name'));
+var_dump($storage3->get('name'));
 
 
-writeln($storage3->has('mail'));
-writeln($storage3->has('mail'));
-writeln($storage3->has('mail'));
+var_dump($storage3->has('mail'));
+var_dump($storage3->has('mail'));
+var_dump($storage3->has('mail'));
 
 $storage3->remove('name');
 
