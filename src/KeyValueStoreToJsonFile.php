@@ -10,6 +10,9 @@ namespace App;
 
 final class KeyValueStoreToJsonFile extends AbstractKeyValueStoreToFile
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function load(): array
     {
         $storage = file_get_contents($this->file_path);
@@ -17,6 +20,9 @@ final class KeyValueStoreToJsonFile extends AbstractKeyValueStoreToFile
         return is_array($data) ? $data : [];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function update(array $data): void
     {
         $json = json_encode($data);

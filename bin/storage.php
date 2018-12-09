@@ -27,7 +27,7 @@ $storage1->clear();
 
 var_dump($storage1->get('name'));
 */
-/*
+
 $storage2 = new KeyValueStoreToYamlFile('data/storage.yaml');
 
 $storage2->set('name', 'Anna');
@@ -42,8 +42,8 @@ var_dump($storage2->get('name'));
 
 
 //$storage2->clear();
-*/
 
+/*
 $storage3 = new KeyValueStoreToJsonFile('data/storage.json');
 
 $storage3->set('name','Anna');
@@ -56,5 +56,5 @@ var_dump($storage3->has('mail'));
 var_dump($storage3->has('mail'));
 
 $storage3->remove('name');
-
+*/
 //$storage3->clear();

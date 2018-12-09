@@ -8,6 +8,9 @@
 
 namespace App;
 
+/**
+ * Interface of key value store component.
+ */
 interface KeyValueStoreInterface
 {
     /**

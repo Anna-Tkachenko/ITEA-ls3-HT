@@ -10,8 +10,16 @@ namespace App;
 
 class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 {
+    /**
+     * Array of stored elements.
+     *
+     * @var array
+     */
     private $storage = [];
 
+    /**
+     * {@inheritdoc}
+     */
     public function set(string $key, $value): void
     {
         if (is_string($key)) {
@@ -23,6 +31,9 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get(string $key, $default = null)
     {
         if (isset($this->storage[$key])) {
@@ -32,11 +43,17 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         return $default;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function has(string $key): bool
     {
         return array_key_exists($key, $this->storage);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function remove(string $key): void
     {
         if (isset($this->storage[$key])) {
@@ -48,6 +65,9 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function clear(): void
     {
         $this->storage = [];

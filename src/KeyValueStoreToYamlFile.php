@@ -12,11 +12,18 @@ use Symfony\Component\Yaml\Yaml;
 
 final class KeyValueStoreToYamlFile extends AbstractKeyValueStoreToFile
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function load(): array
     {
         $data = Yaml::parseFile($this->file_path);
         return is_array($data) ? $data : [];
     }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function update(array $data): void
     {
         $yaml = Yaml::dump($data);
