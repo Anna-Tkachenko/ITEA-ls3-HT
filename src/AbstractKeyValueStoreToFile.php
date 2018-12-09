@@ -31,6 +31,11 @@ abstract class AbstractKeyValueStoreToFile implements KeyValueStoreInterface
      */
     abstract protected function update(array $data): void;
 
+    /**
+     * AbstractKeyValueStoreToFile constructor.
+     *
+     * @param string $file_path
+     */
     public function __construct(string $file_path)
     {
         $this->file_path = $file_path;
