@@ -7,10 +7,7 @@
  * Time: 7:03 PM
  */
 
-use App\AbstractKeyValueStoreToFile;
-use App\KeyValueStoreToJsonFile;
-use App\KeyValueStoreToYamlFile;
-use App\KeyValueStoreToPhpArray;
+use App\{AbstractKeyValueStoreToFile, KeyValueStoreToPhpArray, KeyValueStoreToJsonFile, KeyValueStoreToYamlFile};
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -46,7 +43,6 @@ var_dump($storage2->get('name'));
 
 //$storage2->clear();
 */
-
 
 $storage3 = new KeyValueStoreToJsonFile('data/storage.json');
 

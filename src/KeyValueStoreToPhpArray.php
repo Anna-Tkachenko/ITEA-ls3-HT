@@ -13,7 +13,7 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 
     private $storage = [];
 
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         if (is_string($key)) {
             $this->storage[$key] = $value;
@@ -24,7 +24,7 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         }
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         if(isset($this->storage[$key])){
             return $this->storage[$key];
@@ -34,12 +34,12 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 
     }
 
-    public function has($key)
+    public function has(string $key): bool
     {
         return array_key_exists($key, $this->storage);
     }
 
-    public function remove($key)
+    public function remove(string $key): void
     {
         if (isset($this->storage[$key])) {
             unset($this->storage[$key]);
@@ -50,7 +50,7 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
         }
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->storage = [];
     }

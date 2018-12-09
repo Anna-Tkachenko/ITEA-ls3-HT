@@ -12,16 +12,16 @@ abstract class AbstractKeyValueStoreToFile implements KeyValueStoreInterface
 {
     protected $file_path;
 
-    abstract protected function load();
+    abstract protected function load(): array;
 
-    abstract protected function update(array $data);
+    abstract protected function update(array $data): void;
 
-    public function __construct($file_path)
+    public function __construct(string $file_path)
     {
         $this->file_path = $file_path;
     }
 
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         if (is_string($key)) {
             $data = $this->load();
@@ -34,7 +34,7 @@ abstract class AbstractKeyValueStoreToFile implements KeyValueStoreInterface
         }
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         $data = $this->load();
         if (isset($data[$key])) {
@@ -44,18 +44,18 @@ abstract class AbstractKeyValueStoreToFile implements KeyValueStoreInterface
         return $default;
     }
 
-    public function has($key){
+    public function has(string $key): bool
+    {
         $data = $this->load();
         return isset($data[$key]);
     }
 
-    public function remove($key)
+    public function remove(string $key): void
     {
         $data = $this->load();
         if (isset($data[$key])) {
             unset($data[$key]);
             $this->update($data);
-            return true;
         }
 
         throw new \LogicException(
@@ -63,7 +63,7 @@ abstract class AbstractKeyValueStoreToFile implements KeyValueStoreInterface
         );
     }
 
-    public function clear()
+    public function clear(): void
     {
         file_put_contents($this->file_path, '', \LOCK_EX);
     }
