@@ -22,5 +22,4 @@ final class KeyValueStoreToYamlFile extends AbstractKeyValueStoreToFile
         $yaml = Yaml::dump($data);
         file_put_contents($this->file_path, $yaml);
     }
-
 }

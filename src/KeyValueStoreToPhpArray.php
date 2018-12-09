@@ -10,7 +10,6 @@ namespace App;
 
 class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 {
-
     private $storage = [];
 
     public function set(string $key, $value): void
@@ -26,12 +25,11 @@ class KeyValueStoreToPhpArray implements KeyValueStoreInterface
 
     public function get(string $key, $default = null)
     {
-        if(isset($this->storage[$key])){
+        if (isset($this->storage[$key])) {
             return $this->storage[$key];
         }
 
         return $default;
-
     }
 
     public function has(string $key): bool

@@ -10,7 +10,6 @@ namespace App;
 
 final class KeyValueStoreToJsonFile extends AbstractKeyValueStoreToFile
 {
-
     protected function load(): array
     {
         $storage = file_get_contents($this->file_path);
@@ -23,5 +22,4 @@ final class KeyValueStoreToJsonFile extends AbstractKeyValueStoreToFile
         $json = json_encode($data);
         file_put_contents($this->file_path, $json);
     }
-
 }
